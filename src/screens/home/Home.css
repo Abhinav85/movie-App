@@ -24,11 +24,11 @@ display:flex;
 .flex-container > div {
     margin: 16px;
   }
-  
+
 .left {
     width:76%;
   }
-  
+
   .right {
       padding-top:20px;
     width:24%;
@@ -36,4 +36,37 @@ display:flex;
   .marginMovie{
       margin:20px;
   }
-  
+
+  .movie {
+    height:100%;
+    width:100%;
+  }
+
+
+  @media (max-width: 992px) {
+    .left {
+        width:100%;
+      }
+
+
+      .right {
+        width:90%;
+      }
+
+    .flex-container{
+       flex-direction: column;
+    }
+
+    .movie {
+      height:100%;
+      width:auto;
+    }
+
+
+
+    .marginMovie{
+        margin:8px;
+    }
+
+
+  }

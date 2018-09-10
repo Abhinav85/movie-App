@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Header from '../../common/header/Header';
 import './Confirmation.css';
-import BookShow from '../../screens/bookshow/BookShow';
-import Home from '../../screens/home/Home';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import green from '@material-ui/core/colors/green';
+import { Link } from 'react-router-dom';
 
 
 const styles = theme => ({
@@ -56,10 +54,7 @@ class Confirmation extends Component {
     window.location = url;
   }
 
-  handleBackClick = () =>
-  {
-    ReactDOM.render(<BookShow id={this.props.id}  bookingSummary={this.props.bookingSummary} />, document.getElementById('root'));
-  }
+
 
   handleConfirmBooking = () =>
   {
@@ -68,7 +63,7 @@ class Confirmation extends Component {
 
   handleClose = () =>
   {
-    ReactDOM.render(<Home />, document.getElementById('root'));
+    this.props.history.push("/");
   }
 
 
@@ -80,9 +75,9 @@ class Confirmation extends Component {
         <Header />
         <div className="confirmation marginTop16">
             <div>
-              <Typography className="back" onClick={this.handleBackClick}>
+              <Link to={"/bookshow/" +this.props.match.params.id}><Typography className="back" >
                   &#60; Back to Book Show
-              </Typography><br/>
+              </Typography></Link><br/>
               <Card className="cardStyle">
                 <CardContent>
                   <Typography  variant="headline" component="h2">
@@ -90,27 +85,27 @@ class Confirmation extends Component {
                   </Typography><br/>
 
                     <div className="coupon-container"><div className="confirmLeft"><Typography>Location:</Typography></div>
-                    <div><Typography> {this.props.bookingSummary.location}</Typography></div></div>
+                    <div><Typography> {this.props.location.bookingSummary.location}</Typography></div></div>
                   <br/>
 
                     <div className="coupon-container"><div className="confirmLeft"><Typography>Language:</Typography></div>
-                    <div><Typography> {this.props.bookingSummary.language}</Typography></div></div>
+                    <div><Typography> {this.props.location.bookingSummary.language}</Typography></div></div>
                   <br/>
 
                     <div className="coupon-container"><div className="confirmLeft"><Typography>Show Date:</Typography> </div>
-                    <div><Typography> {this.props.bookingSummary.showDate}</Typography></div></div>
+                    <div><Typography> {this.props.location.bookingSummary.showDate}</Typography></div></div>
                   <br/>
 
                     <div className="coupon-container"><div className="confirmLeft"><Typography>Show Time:</Typography></div>
-                    <div><Typography>  {this.props.bookingSummary.showTime}</Typography></div></div>
+                    <div><Typography>  {this.props.location.bookingSummary.showTime}</Typography></div></div>
                   <br/>
 
                     <div className="coupon-container"><div className="confirmLeft"><Typography>Tickets:</Typography> </div>
-                    <div><Typography> {this.props.bookingSummary.tickets}</Typography></div></div>
+                    <div><Typography> {this.props.location.bookingSummary.tickets}</Typography></div></div>
                   <br/>
 
                     <div className="coupon-container"><div className="confirmLeft"><Typography>Unit Price:</Typography> </div>
-                    <div><Typography> {this.props.bookingSummary.unitPrice}</Typography></div></div>
+                    <div><Typography> {this.props.location.bookingSummary.unitPrice}</Typography></div></div>
                   <br/>
                   <div className="coupon-container">
                     <div>
@@ -130,7 +125,7 @@ class Confirmation extends Component {
                   <br/><br/>
 
                     <div className="coupon-container"><div className="confirmLeft"> <span className="bold">Total Price:</span></div>
-                    <div>  {this.props.bookingSummary.unitPrice * this.props.bookingSummary.tickets}</div></div>
+                    <div>  {this.props.location.bookingSummary.unitPrice * this.props.location.bookingSummary.tickets}</div></div>
                    <br/>
                   <Button variant="contained" onClick={this.handleConfirmBooking}  color="primary">
                     Confirm Booking

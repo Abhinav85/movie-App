@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './Header.css';
 import Button from '@material-ui/core/Button';
 import logo from '../../assets/logo.svg';
@@ -12,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import PropTypes from 'prop-types';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import BookShow from '../../screens/bookshow/BookShow'
+import { Link } from 'react-router-dom';
 
 
 
@@ -49,7 +48,19 @@ class Header extends Component {
             username: "",
             usernameRequired: "dispNone",
             password: "",
-            passwordRequired: "dispNone"
+            passwordRequired: "dispNone",
+            email: "",
+            firstname: "",
+            lastname: "",
+            mobile: "",
+            passwordReg: "",
+            emailRequired: "dispNone",
+            firstnameRequired: "dispNone",
+            lastnameRequired: "dispNone",
+            mobileRequired: "dispNone",
+            passwordRegRequired: "dispNone",
+            registrationSuccess: false,
+            regMessage: "Registration Successful. Please Login!",
         };
     }
 
@@ -77,10 +88,6 @@ class Header extends Component {
         this.setState({ password: e.target.value })
     }
 
-    bookshowHandler = () => {
-        ReactDOM.render(<BookShow />, document.getElementById('root'));
-    }
-
     render() {
         return (
             <div>
@@ -91,8 +98,8 @@ class Header extends Component {
                     </div>
                     {this.props.showBookShowButton === "true" ?
                     <div className="bookshow-button">
-                        <Button variant="contained" color="primary" onClick={this.bookshowHandler}>
-                        BOOK SHOW</Button>
+                        <Link to={"/bookshow/" +this.props.id}><Button variant="contained" color="primary">
+                        BOOK SHOW</Button></Link>
                     </div>: ""}
                 </header>
                 <Modal
@@ -120,6 +127,41 @@ class Header extends Component {
                             </FormControl><br /><br />
                             <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
                         </TabContainer>}
+                        {this.state.value === 1 && <TabContainer>
+                        <FormControl required>
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <Input id="email" type="email" onChange={this.inputEmailChangeHandler} />
+                            <FormHelperText className={this.state.emailRequired}><span className="red">required</span></FormHelperText>
+                        </FormControl><br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="firstname">First Name</InputLabel>
+                            <Input id="firstname" onChange={this.inputFirstnameChangeHandler} />
+                            <FormHelperText className={this.state.firstnameRequired}><span className="red">required</span></FormHelperText>
+                        </FormControl><br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="lastname">Last Name</InputLabel>
+                            <Input id="lastname" onChange={this.inputLastnameChangeHandler} />
+                            <FormHelperText className={this.state.lastnameRequired}><span className="red">required</span></FormHelperText>
+                        </FormControl><br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="mobile">Mobile Number</InputLabel>
+                            <Input id="mobile" onChange={this.inputMobileChangeHandler} />
+                            <FormHelperText className={this.state.mobileRequired}><span className="red">required</span></FormHelperText>
+                        </FormControl><br /><br />
+                        <FormControl required aria-describedby="name-helper-text">
+                            <InputLabel htmlFor="passwordReg">Password</InputLabel>
+                            <Input type="password" id="passwordReg" onChange={this.inputPasswordRegChangeHandler} />
+                            <FormHelperText className={this.state.passwordRegRequired}><span className="red">required</span></FormHelperText>
+                        </FormControl><br /><br />
+                        {this.state.registrationSuccess === true &&
+                            <FormControl>
+                                <span className="successText"> {this.state.regMessage}</span>
+                            </FormControl>}<br /><br />
+                        <Button variant="contained" color="primary" onClick={this.registerClickHandler}>
+                            REGISTER
+                        </Button>
+                    </TabContainer>}
+
 
 
                 </Modal>
